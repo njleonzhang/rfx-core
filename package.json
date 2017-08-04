@@ -45,9 +45,9 @@
     }
   },
   "dependencies": {
-    "json-stringify-safe": "5.0.1",
     "lodash": "4.16.6",
-    "safe-access": "0.1.0"
+    "safe-access": "0.1.0",
+    "serialize-json": "^1.0.1"
   },
   "peerDependencies": {
     "mobx": "^2.5.0 || ^3.0.0"

@@ -1,15 +1,14 @@
 /* eslint no-undef: 0 */
 /* eslint no-underscore-dangle: 0 */
-import jsonStringifySafe from 'json-stringify-safe';
 import { toJS } from 'mobx';
+import serialize from 'serialize-json';
 import $store from './store';
-
 /**
  Dehydrate (on server)
 */
 export function dehydrate() {
   // convert store to json
-  return jsonStringifySafe(toJS($store.get(), true));
+  return serialize.encode(toJS($store.get(), true));
 }
 
 /**
@@ -20,13 +19,12 @@ export function rehydrate() {
   return $store.set(window.__STATE);
 }
 
-
 /**
   HRM Rehydrate (on 'module.hot.accept')
 */
 export function hotRehydrate() {
   if (window.__STORE) {
-    window.__STORE = $store.set(JSON.parse(dehydrate(window.__STORE)));
+    window.__STORE = $store.set(serialize.decode(dehydrate(window.__STORE)));
   }
   if (!window.store) {
     window.__STORE = $store.get();
